@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import './App.css'
 import * as THREE from 'three'
+import OrbitControls from 'three-orbitcontrols'
 import lifecycle from 'react-pure-lifecycle'
 
 let _isMounted = false
@@ -31,14 +32,19 @@ function App() {
     const geometry = new THREE.SphereBufferGeometry(80, 80, 80)
     const material = new THREE.MeshPhongMaterial({  map: new THREE.TextureLoader().load('img/Auckland.jpg') })
     const sphere = new THREE.Mesh(geometry, material)
+    const mouseControls = new OrbitControls(
+      camera,
+      renderer.domElement
+    )
     sphere.position.set(0, 0, 0)
     scene.add(sphere)
     camera.position.z = 5
     const animate = function() {
       requestAnimationFrame(animate)
-      sphere.rotation.x += 0.01
-      sphere.rotation.y += 0.01
+      // sphere.rotation.x += 0.01
+      // sphere.rotation.y += 0.01
       renderer.render(scene, camera)
+      mouseControls.update()
     }
     animate()
   })
